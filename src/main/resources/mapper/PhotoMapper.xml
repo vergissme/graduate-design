@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.nfchats.dao.PhotoDao">
+    <!--2. 基于xml的方式-->
+    <select id="findAll" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+    </select>
+    <select id="findBySearch" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+    <select id="findBySearchFriends" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            privacy_level='friends' and
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+    <select id="findBySearchMine" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            privacy_level='private' and
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+    <select id="findBySearchPets" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            type='萌宠' and
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+    <select id="findBySearchPlaces" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            type='风景' and
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+    <select id="findBySearchPerson" resultType="org.example.nfchats.entity.Photo">
+        select * from photo
+        <where>
+            type='人物' and
+            <if test="params != null and params.title !=null and params.title != ''">
+                and title like concat('%',#{ params.title },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+</mapper>

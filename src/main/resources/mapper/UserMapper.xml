@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.nfchats.dao.UserDao">
+    <!--2. 基于xml的方式-->
+    <select id="getUser" resultType="org.example.nfchats.entity.User">
+        select * from user where user_type='普通用户'
+    </select>
+    <select id="findBySearch" resultType="org.example.nfchats.entity.User">
+        select * from user
+        <where>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+            <if test="params != null and params.email !=null and params.email != ''">
+                and email like concat('%',#{ params.email },'%')
+            </if>
+            and user_type='普通用户'
+        </where>
+    </select>
+</mapper>

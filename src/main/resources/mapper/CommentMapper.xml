@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.nfchats.dao.CommentDao">
+    <!--2. 基于xml的方式-->
+    <select id="findAll" resultType="org.example.nfchats.entity.Comment">
+        select * from comment
+    </select>
+    <select id="findBySearch" resultType="org.example.nfchats.entity.Comment">
+        select * from comment
+        <where>
+            <if test="params != null and params.content !=null and params.content != ''">
+                and content like concat('%',#{ params.content },'%')
+            </if>
+            <if test="params != null and params.username !=null and params.username != ''">
+                and username like concat('%',#{ params.username },'%')
+            </if>
+        </where>
+    </select>
+</mapper>
