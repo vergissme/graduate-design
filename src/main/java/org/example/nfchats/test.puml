@@ -1,0 +1,40 @@
+@startuml
+actor User1
+actor User2
+participant "FriendshipController" as FC
+participant "FriendshipService" as FS
+participant "FriendshipDao" as FD
+participant "MyBatis Mapper XML" as MX
+
+User1 -> FC : createFriendship(Friendship friendship)
+FC -> FS : createFriendship(Friendship friendship)
+FS -> FD : save(friendship)
+FD -> MX : execute insert friendship query from XML
+MX --> FD : executed query result
+FD --> FS : returns saved friendship id
+FS --> FC : friendship created successfully
+
+User1 -> FC : getFriendships()
+FC -> FS : getFriendships()
+FS -> FD : findAll()
+FD -> MX : execute select all friendships query from XML
+MX --> FD : executed query result
+FD --> FS : returns friendships list
+FS --> FC : friendships list returned
+
+User1 -> FC : deleteFriendship(friendshipId)
+FC -> FS : deleteFriendship(friendshipId)
+FS -> FD : deleteFriendship(friendshipId)
+FD -> MX : execute delete friendship query from XML
+MX --> FD : executed query result
+FD --> FS : friendship deleted
+FS --> FC : friendship deleted successfully
+
+User1 -> FC : findFriend(userId)
+FC -> FS : findFriend(userId)
+FS -> FD : findByUserId(userId)
+FD -> MX : execute select friend by userId query from XML
+MX --> FD : executed query result
+FD --> FS : returns found friend or null
+FS --> FC : friend found or not found
+@enduml
